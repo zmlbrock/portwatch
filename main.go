@@ -70,9 +70,12 @@ func main() {
 	// Block until SIGINT or SIGTERM
 	sigCh := make(chan os.Signal, 1)
 	signal.Notify(sigCh, syscall.SIGINT, syscall.SIGTERM)
-	<-sigCh
+	sig := <-sigCh
 
-	fmt.Println("\nshutting down portwatch...")
+	if cfg.Verbose {
+		fmt.Printf("\nreceived signal: %s\n", sig)
+	}
+	fmt.Println("shutting down portwatch...")
 	m.Stop()
 }
 
