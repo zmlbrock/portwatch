@@ -43,6 +43,11 @@ func main() {
 	}
 	cfg.Verbose = *verbose
 
+	if err := validateConfig(cfg); err != nil {
+		fmt.Fprintf(os.Stderr, "[error] invalid configuration: %v\n", err)
+		os.Exit(1)
+	}
+
 	// Build notifier chain based on config
 	n, err := notifier.Build(cfg)
 	if err != nil {
@@ -69,4 +74,16 @@ func main() {
 
 	fmt.Println("\nshutting down portwatch...")
 	m.Stop()
+}
+
+// validateConfig performs basic sanity checks on the resolved configuration
+// before the monitor is started.
+func validateConfig(cfg *config.Config) error {
+	if cfg.IntervalSeconds <= 0 {
+		return fmt.Errorf("interval must be greater than 0, got %d", cfg.IntervalSeconds)
+	}
+	if len(cfg.Ports) == 0 {
+		return fmt.Errorf("no ports configured: add at least one port to watch")
+	}
+	return nil
 }
