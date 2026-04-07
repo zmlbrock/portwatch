@@ -57,6 +57,11 @@ func (m *Manager) Send(event Event) error {
 	return nil
 }
 
+// Add registers one or more additional notifiers with the Manager.
+func (m *Manager) Add(notifiers ...Notifier) {
+	m.notifiers = append(m.notifiers, notifiers...)
+}
+
 // ConsoleNotifier writes alert events to an io.Writer (typically stdout/stderr).
 type ConsoleNotifier struct {
 	out io.Writer
