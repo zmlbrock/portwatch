@@ -14,8 +14,8 @@ import (
 type Level string
 
 const (
-	LevelInfo    Level = "INFO"
-	LevelWarning Level = "WARNING"
+	LevelInfo     Level = "INFO"
+	LevelWarning  Level = "WARNING"
 	LevelCritical Level = "CRITICAL"
 )
 
@@ -102,6 +102,17 @@ func ClosedPortEvent(port scanner.PortState) Event {
 		Message:   "port closed",
 		Port:      port,
 	}
+}
+
+// String returns a human-readable representation of the Event, suitable for
+// logging or display purposes.
+func (e Event) String() string {
+	return fmt.Sprintf("[%s] %s %-8s %s",
+		e.Timestamp.Format(time.RFC3339),
+		e.Level,
+		formatPort(e.Port),
+		e.Message,
+	)
 }
 
 // formatPort returns a human-readable representation of a PortState.
