@@ -49,6 +49,15 @@ When an unexpected port opens or closes, `portwatch` prints an alert to stdout a
 | `snapshot` | Print current open ports and exit |
 | `version` | Print version information |
 
+### Flags
+
+| Flag | Default | Description |
+|---|---|---|
+| `--interval` | `60` | Scan interval in seconds |
+| `--allow` | _(none)_ | Comma-separated list of ports to suppress from alerts |
+| `--webhook` | _(none)_ | Webhook URL to POST alerts to |
+| `--config` | `~/.portwatch.yaml` | Path to config file |
+
 ## Configuration
 
 `portwatch` can be configured via a YAML file at `~/.portwatch.yaml`:
@@ -61,6 +70,8 @@ allow:
   - 443
 webhook: https://hooks.example.com/alert
 ```
+
+Command-line flags take precedence over values defined in the config file.
 
 ## License
 
