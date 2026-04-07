@@ -57,6 +57,7 @@ When an unexpected port opens or closes, `portwatch` prints an alert to stdout a
 | `--allow` | _(none)_ | Comma-separated list of ports to suppress from alerts |
 | `--webhook` | _(none)_ | Webhook URL to POST alerts to |
 | `--config` | `~/.portwatch.yaml` | Path to config file |
+| `--log` | _(none)_ | Path to a file where alerts are appended in addition to stdout |
 
 ## Configuration
 
@@ -69,6 +70,7 @@ allow:
   - 80
   - 443
 webhook: https://hooks.example.com/alert
+log: /var/log/portwatch.log
 ```
 
 Command-line flags take precedence over values defined in the config file.
